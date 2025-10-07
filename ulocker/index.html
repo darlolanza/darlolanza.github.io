@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografía Interactiva: U LOCKER Ushuaia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Viga&display=swap" rel="stylesheet">
+    <style>
+        /* La tipografía base para todo el documento es Inter */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FFF8F0; /* Naranja muy suave de fondo */
+        }
+        /* Se aplica la tipografía Viga específicamente a los títulos */
+        .section-title,
+        section h2,
+        .card h3,
+        section h3,
+        .timeline-item h4,
+        footer h3 {
+            font-family: 'Viga', sans-serif;
+        }
+        .main-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 900; /* Peso de tipografía black */
+            color: #D97706; /* Color naranja principal */
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: #6B7280;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+        }
+        .card i {
+            font-size: 3rem;
+            color: #FB923C; /* Naranja secundario */
+            margin-bottom: 1rem;
+        }
+        .card h3 {
+            font-size: 1.25rem;
+            color: #1F2937;
+            margin-bottom: 0.5rem;
+        }
+        .card p {
+            color: #4B5565;
+        }
+        .timeline-item {
+            position: relative;
+            padding-bottom: 2rem;
+            padding-left: 2.5rem;
+            border-left: 2px solid #FDBA74;
+        }
+        .timeline-item:last-child {
+            border-left: 2px solid transparent;
+        }
+        .timeline-dot {
+            position: absolute;
+            left: -11px;
+            top: 0;
+            width: 22px;
+            height: 22px;
+            background-color: #FB923C;
+            border-radius: 50%;
+            border: 4px solid #FFF8F0;
+        }
+        .quiz-option {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 0.75rem 1.25rem;
+            margin-bottom: 0.5rem;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+            cursor: pointer;
+        }
+        .quiz-option:hover:not(:disabled) {
+            background-color: #FEF3C7;
+            border-color: #FBBF24;
+        }
+        .quiz-option.correct {
+            background-color: #D1FAE5 !important;
+            border-color: #10B981 !important;
+            color: #065F46;
+            font-weight: 600;
+        }
+        .quiz-option.incorrect {
+            background-color: #FEE2E2 !important;
+            border-color: #EF4444 !important;
+            color: #991B1B;
+            font-weight: 600;
+        }
+        .quiz-option:disabled {
+            cursor: not-allowed;
+        }
+        #quiz-container {
+            transition: opacity 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <!-- Título Introductorio -->
+        <header>
+            <h1 class="section-title">U LOCKER: La Solución Inteligente de Equipaje</h1>
+            <p class="section-subtitle">Descubre cómo transformamos la experiencia del turista en Ushuaia, el Fin del Mundo.</p>
+        </header>
+
+        <!-- Pilares del Servicio -->
+        <section class="grid md:grid-cols-3 gap-8 mb-16">
+            <div class="card">
+                <i class="fas fa-hand-pointer"></i>
+                <h3>Simplicidad y Eficiencia</h3>
+                <p>Proceso 100% intuitivo y rápido, desde la reserva online hasta el uso del locker.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-user-cog"></i>
+                <h3>Autonomía Total</h3>
+                <p>Sistema self-service que te da control total sin intermediarios ni esperas.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-clock"></i>
+                <h3>Disponibilidad 24/7</h3>
+                <p>Accede a tus pertenencias a cualquier hora, los 365 días del año, con total libertad.</p>
+            </div>
+        </section>
+
+        <!-- Cómo Funciona -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Tu Libertad en 3 Simples Pasos</h2>
+            <div class="max-w-2xl mx-auto">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h4 class="font-semibold text-lg text-orange-600">1. Reservá en Segundos</h4>
+                    <p class="text-gray-600">Entra a https://ulocker.ar/, elige tu locker y reserva tu espacio desde cualquier lugar del mundo.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h4 class="font-semibold text-lg text-orange-600">2. Accedé con tu Código</h4>
+                    <p class="text-gray-600">Recibe un código de acceso digital único para guardar o retirar tus cosas cuando quieras.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h4 class="font-semibold text-lg text-orange-600">3. Disfrutá la Ciudad</h4>
+                    <p class="text-gray-600">Explora Ushuaia con las manos libres y la tranquilidad de que tu equipaje está 100% seguro.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Oportunidades para Empresas -->
+        <section class="mb-16 bg-white p-8 rounded-xl shadow-sm">
+             <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Alianzas Estratégicas que Potencian tu Negocio</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <div class="flex items-center text-orange-500 mb-3">
+                        <i class="fas fa-layer-group text-2xl mr-3"></i>
+                        <h3 class="font-bold text-xl">Agencias Plus (Prepago)</h3>
+                    </div>
+                    <p class="text-gray-600">Compra paquetes de horas con hasta un <strong>30% de descuento</strong> y aumenta la rentabilidad de tu negocio integrando nuestro servicio.</p>
+                </div>
+                <div>
+                    <div class="flex items-center text-orange-500 mb-3">
+                        <i class="fas fa-handshake text-2xl mr-3"></i>
+                        <h3 class="font-bold text-xl">Programa de Referidos</h3>
+                    </div>
+                    <p class="text-gray-600">Gana una <strong>comisión del 10%</strong> por cada cliente referido, mientras ellos obtienen un <strong>5% de descuento</strong>. ¡Un beneficio para todos!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Conexión Redes Sociales -->
+        <section class="mb-16 bg-white p-8 rounded-xl shadow-sm">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Conéctate con Nosotros</h2>
+            <div class="grid md:grid-cols-2 gap-8 text-center">
+                <!-- Link a Instagram -->
+                <div class="flex flex-col items-center justify-center">
+                    <i class="fab fa-instagram text-4xl text-pink-600 mb-3"></i>
+                    <h3 class="font-semibold text-lg mb-4">Síguenos en Instagram</h3>
+                    <a href="https://www.instagram.com/ulockertdf/" target="_blank" class="inline-block bg-orange-500 text-white font-bold py-2 px-5 rounded-lg hover:bg-orange-600 transition-colors">
+                        @ulockertdf
+                    </a>
+                </div>
+                <!-- Link a Google Reviews -->
+                <div class="flex flex-col items-center justify-center">
+                    <i class="fab fa-google text-4xl text-blue-600 mb-3"></i>
+                    <h3 class="font-semibold text-lg mb-4">Déjanos tu opinión en Google</h3>
+                    <a href="https://g.page/r/CS3EYUTw5g2wEAE/review" target="_blank" class="inline-block bg-orange-500 text-white font-bold py-2 px-5 rounded-lg hover:bg-orange-600 transition-colors">
+                        Escribir Reseña
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quiz Interactivo -->
+        <section>
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-2">Pon a Prueba tu Conocimiento</h2>
+            <p class="text-center text-gray-500 mb-8">¿Qué tanto aprendiste sobre U LOCKER?</p>
+            <div id="quiz-container" class="bg-white p-8 rounded-xl shadow-sm min-h-[300px] flex items-center justify-center">
+                <!-- El Quiz se renderiza aquí dinámicamente -->
+            </div>
+        </section>
+
+        <!-- Pie de página -->
+        <footer class="text-center mt-16 pt-8 border-t border-gray-200">
+            <h3 class="text-xl font-bold text-orange-600">¿Listo para liberar tu viaje o potenciar tu negocio?</h3>
+            <p class="text-gray-600 mt-2 mb-4">Fortalezcamos juntos la experiencia turística en Ushuaia.</p>
+            <div class="flex justify-center items-center gap-4">
+                <a href="https://ulocker.ar/" target="_blank" class="bg-orange-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-orange-600 transition-colors">
+                    Visita ULOCKER.AR
+                </a>
+                <button id="openContactModalBtn" class="bg-gray-700 text-white font-bold py-3 px-6 rounded-lg hover:bg-gray-800 transition-colors">
+                    Contacto
+                </button>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Modal de Contacto -->
+    <div id="contactModal" class="fixed z-10 inset-0 overflow-y-auto hidden">
+        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <!-- Fondo del Modal -->
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                <div id="modal-overlay" class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+
+            <!-- Contenido del Modal -->
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div id="modal-content-container" class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="w-full">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                                Formulario de Contacto
+                            </h3>
+                            <button id="closeModalBtn" class="text-gray-400 hover:text-gray-600">
+                                <span class="text-2xl">&times;</span>
+                            </button>
+                        </div>
+                        <form id="contactForm">
+                            <div class="mb-4">
+                                <label for="name" class="block text-sm font-medium text-gray-700">Nombre</label>
+                                <input type="text" name="name" id="name" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm">
+                            </div>
+                            <div class="mb-4">
+                                <label for="phone" class="block text-sm font-medium text-gray-700">Teléfono (con código de país)</label>
+                                <input type="tel" name="phone" id="phone" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm">
+                            </div>
+                            <div class="mb-4">
+                                <label for="email" class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
+                                <input type="email" name="email" id="email" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm">
+                            </div>
+                            <div class="mb-4">
+                                <label for="comment" class="block text-sm font-medium text-gray-700">Comentario</label>
+                                <textarea id="comment" name="comment" rows="4" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button type="submit" form="contactForm" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-orange-500 text-base font-medium text-white hover:bg-orange-600 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
+                        Enviar
+                    </button>
+                    <button type="button" id="cancelModalBtn" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        const quizData = [
+            {
+                question: "¿Cuál es la misión principal de U LOCKER?",
+                options: ["Ofrecer tours en la ciudad", "Resolver la necesidad de custodia de equipaje", "Alquilar vehículos", "Vender pasajes aéreos"],
+                answer: "Resolver la necesidad de custodia de equipaje"
+            },
+            {
+                question: "¿Cómo accede un usuario a su locker después de reservar?",
+                options: ["Con una llave física", "A través de reconocimiento facial", "Con un código de acceso digital único", "Llamando a un operador"],
+                answer: "Con un código de acceso digital único"
+            },
+            {
+                question: "¿Cuál es la disponibilidad del servicio de U LOCKER?",
+                options: ["Solo en horario comercial", "Fines de semana y feriados", "De 8:00 a 20:00", "24 horas, los 365 días del año"],
+                answer: "24 horas, los 365 días del año"
+            },
+            {
+                question: "¿Qué comisión obtiene un socio en el Programa de Referidos por cada reserva?",
+                options: ["5%", "10%", "15%", "20%"],
+                answer: "10%"
+            },
+            {
+                question: "Al usar un código de referido, ¿qué descuento recibe el turista?",
+                options: ["5%", "10%", "No recibe descuento", "15%"],
+                answer: "5%"
+            }
+        ];
+
+        const quizContainer = document.getElementById('quiz-container');
+        let currentQuestionIndex = 0;
+
+        function renderQuestion() {
+            quizContainer.style.opacity = 0;
+            
+            setTimeout(() => {
+                quizContainer.innerHTML = '';
+
+                if (currentQuestionIndex >= quizData.length) {
+                    quizContainer.innerHTML = `
+                        <div class="text-center">
+                            <h3 class="text-2xl font-bold text-green-600">¡Quiz completado!</h3>
+                            <p class="text-gray-700 mt-2">Has repasado los puntos clave sobre U LOCKER.</p>
+                        </div>
+                    `;
+                    quizContainer.style.opacity = 1;
+                    return;
+                }
+
+                const quizItem = quizData[currentQuestionIndex];
+                const questionWrapper = document.createElement('div');
+                questionWrapper.className = "w-full";
+
+                const questionText = document.createElement('p');
+                questionText.className = 'font-semibold text-lg mb-4 text-center';
+                questionText.textContent = `${currentQuestionIndex + 1}. ${quizItem.question}`;
+                
+                const optionsContainer = document.createElement('div');
+                
+                quizItem.options.forEach(optionText => {
+                    const button = document.createElement('button');
+                    button.className = 'quiz-option';
+                    button.textContent = optionText;
+                    button.onclick = () => checkAnswer(optionText, button, optionsContainer);
+                    optionsContainer.appendChild(button);
+                });
+                
+                questionWrapper.appendChild(questionText);
+                questionWrapper.appendChild(optionsContainer);
+                quizContainer.appendChild(questionWrapper);
+                quizContainer.style.opacity = 1;
+
+            }, 300); // delay for fade out
+        }
+
+        function checkAnswer(selectedOption, selectedButton, optionsContainer) {
+            const correctAnswer = quizData[currentQuestionIndex].answer;
+            const isCorrect = selectedOption === correctAnswer;
+            
+            const allButtons = optionsContainer.getElementsByTagName('button');
+            for (let btn of allButtons) {
+                btn.disabled = true;
+                if (btn.textContent === correctAnswer) {
+                    btn.classList.add('correct');
+                }
+            }
+
+            if (!isCorrect) {
+                selectedButton.classList.add('incorrect');
+            }
+
+            setTimeout(() => {
+                currentQuestionIndex++;
+                renderQuestion();
+            }, 1500); // Wait 1.5s before showing next question
+        }
+
+        // Initial render
+        renderQuestion();
+        
+        // --- Lógica del Modal de Contacto ---
+        const openModalBtn = document.getElementById('openContactModalBtn');
+        const contactModal = document.getElementById('contactModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const cancelModalBtn = document.getElementById('cancelModalBtn');
+        const modalOverlay = document.getElementById('modal-overlay');
+        const contactForm = document.getElementById('contactForm');
+        const modalContentContainer = document.getElementById('modal-content-container');
+
+        function showModal() {
+            contactModal.classList.remove('hidden');
+        }
+
+        function hideModal() {
+            contactModal.classList.add('hidden');
+        }
+
+        openModalBtn.addEventListener('click', showModal);
+        closeModalBtn.addEventListener('click', hideModal);
+        cancelModalBtn.addEventListener('click', hideModal);
+        modalOverlay.addEventListener('click', hideModal);
+
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+            console.log("Form data submitted:", data);
+            
+            modalContentContainer.innerHTML = `
+                <div class="bg-white p-6 text-center">
+                    <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 mb-4">
+                        <i class="fas fa-check text-green-600"></i>
+                    </div>
+                    <h3 class="text-lg leading-6 font-medium text-gray-900">¡Mensaje Enviado!</h3>
+                    <div class="mt-2">
+                        <p class="text-sm text-gray-500">
+                            Gracias por contactarnos. Te responderemos a la brevedad.
+                        </p>
+                    </div>
+                     <div class="mt-5">
+                        <button type="button" id="closeSuccessBtn" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-orange-500 text-base font-medium text-white hover:bg-orange-600 focus:outline-none sm:w-auto sm:text-sm">
+                            Cerrar
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('closeSuccessBtn').addEventListener('click', () => {
+                 // Recargamos la página para resetear el modal a su estado original.
+                window.location.reload();
+            });
+        });
+    </script>
+</body>
+</html>
+

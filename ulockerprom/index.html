@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografía Interactiva: U LOCKER Ushuaia</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
+        :root {
+            --primary-color: #F28C28; /* Naranja principal */
+            --secondary-color: #FFDAB9; /* Naranja suave (PeachPuff) */
+            --dark-color: #333;
+            --light-color: #f4f4f4;
+            --white-color: #fff;
+            --correct-color: #28a745;
+            --incorrect-color: #dc3545;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: var(--light-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 2rem 0;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .infographic-section {
+            background: var(--white-color);
+            margin: 2rem 0;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .infographic-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .card-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 8px;
+            width: 200px;
+            flex-grow: 1;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        .card .icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            color: #555;
+        }
+        
+        /* Timeline Section */
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: var(--secondary-color);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+        }
+
+        .timeline-container {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+        }
+
+        .timeline-container.left { left: 0; }
+        .timeline-container.right { left: 50%; }
+
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -13px;
+            background-color: white;
+            border: 4px solid var(--primary-color);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .right::after { left: -12px; }
+        .content {
+            padding: 20px 30px;
+            background-color: white;
+            position: relative;
+            border-radius: 6px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .content .icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Quiz Section */
+        #quiz-container {
+            background: var(--white-color);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        #quiz-container h2 { text-align: center; color: var(--primary-color); }
+
+        .question {
+            margin-bottom: 1.5rem;
+        }
+        
+        .question p {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .options button {
+            display: block;
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 0.5rem;
+            border: 2px solid var(--secondary-color);
+            background: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .options button:hover:not(:disabled) {
+            background-color: var(--secondary-color);
+            color: var(--dark-color);
+        }
+
+        .options button.correct {
+            background-color: var(--correct-color);
+            color: var(--white-color);
+            border-color: var(--correct-color);
+        }
+
+        .options button.incorrect {
+            background-color: var(--incorrect-color);
+            color: var(--white-color);
+            border-color: var(--incorrect-color);
+        }
+
+        .options button:disabled {
+            cursor: not-allowed;
+        }
+
+        #feedback {
+            text-align: center;
+            font-weight: bold;
+            margin-top: 1rem;
+            height: 20px;
+        }
+        
+        #results-container {
+            text-align: center;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+            background-color: var(--dark-color);
+            color: var(--white-color);
+        }
+
+        footer p { margin: 0.5rem 0; }
+
+        footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+            border: 2px solid var(--primary-color);
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        footer a:hover {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1>Disfrutá Ushuaia Sin Límites: Tu Equipaje Seguro con U LOCKER</h1>
+            <p>Transformamos tus horas de espera en oportunidades para explorar el Fin del Mundo.</p>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <section class="infographic-section">
+            <h2>El Dilema del Viajero Moderno</h2>
+            <div class="card-container">
+                <div class="card">
+                    <div class="icon"><i class="fas fa-suitcase-rolling"></i></div>
+                    <h3>Equipaje Incómodo</h3>
+                    <p>Arrastrar valijas por calles empinadas te impide disfrutar tu viaje al máximo.</p>
+                </div>
+                <div class="card">
+                    <div class="icon"><i class="fas fa-clock"></i></div>
+                    <h3>Horas Perdidas</h3>
+                    <p>El tiempo entre el check-out y tu vuelo es valioso. ¡No lo desperdicies!</p>
+                </div>
+                <div class="card">
+                    <div class="icon"><i class="fas fa-map-marked-alt"></i></div>
+                    <h3>Aventuras Frustradas</h3>
+                    <p>No renuncies a una última excursión por no tener dónde dejar tus pertenencias.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="infographic-section" style="background-color: var(--secondary-color);">
+            <h2>Nuestra Solución: Libertad y Comodidad 24/7</h2>
+             <div class="card-container">
+                <div class="card" style="background-color: #fff;">
+                    <div class="icon"><i class="fas fa-robot"></i></div>
+                    <h3>Autonomía Total</h3>
+                    <p>Accedé a tu locker a cualquier hora con nuestro sistema 100% self-service.</p>
+                </div>
+                <div class="card" style="background-color: #fff;">
+                    <div class="icon"><i class="fas fa-calendar-alt"></i></div>
+                    <h3>Disponibilidad 24/7</h3>
+                    <p>Operamos los 365 días del año, sin importar tu hora de llegada o partida.</p>
+                </div>
+                <div class="card" style="background-color: #fff;">
+                    <div class="icon"><i class="fas fa-map-pin"></i></div>
+                    <h3>Ubicación Céntrica</h3>
+                    <p>Estratégicamente ubicados en el corazón de Ushuaia para tu máxima conveniencia.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="infographic-section">
+            <h2>Tu Libertad en 3 Simples Pasos</h2>
+            <div class="timeline">
+                <div class="timeline-container left">
+                    <div class="content">
+                        <div class="icon"><i class="fas fa-laptop-code"></i></div>
+                        <h3>1. Reservá Online</h3>
+                        <p>Ingresá a www.ulocker.ar, elegí la duración y pagá de forma segura en pocos clics.</p>
+                    </div>
+                </div>
+                <div class="timeline-container right">
+                    <div class="content">
+                        <div class="icon"><i class="fas fa-key"></i></div>
+                        <h3>2. Guardá con tu Código</h3>
+                        <p>Recibirás un código de acceso digital único. Ingresalo en el local para guardar tu equipaje.</p>
+                    </div>
+                </div>
+                <div class="timeline-container left">
+                    <div class="content">
+                        <div class="icon"><i class="fas fa-mountain-sun"></i></div>
+                        <h3>3. Disfrutá Ushuaia</h3>
+                        <p>Con tus pertenencias seguras, tenés total libertad para tu última aventura.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="infographic-section">
+            <h2>Tu Tranquilidad es Nuestra Prioridad</h2>
+            <div class="card-container">
+                <div class="card">
+                    <div class="icon"><i class="fas fa-video"></i></div>
+                    <h3>Videovigilancia 24/7</h3>
+                    <p>Monitoreo constante con cámaras de seguridad en todos nuestros locales.</p>
+                </div>
+                <div class="card">
+                    <div class="icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3>Cerraduras Avanzadas</h3>
+                    <p>Cada locker cuenta con una cerradura electrónica de alta seguridad.</p>
+                </div>
+                <div class="card">
+                    <div class="icon"><i class="fas fa-user-lock"></i></div>
+                    <h3>Acceso Exclusivo</h3>
+                    <p>Solo el usuario autorizado con el código personal puede acceder al compartimento.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="quiz-container">
+            <h2>Poné a Prueba tu Conocimiento</h2>
+            <div id="quiz"></div>
+            <div id="feedback"></div>
+            <div id="results-container" style="display:none;">
+                <h3>¡Quiz completado!</h3>
+                <p>Tu puntuación final es: <span id="final-score"></span></p>
+                <button onclick="restartQuiz()" style="padding: 10px 20px; font-size: 1rem; cursor: pointer; background-color: var(--primary-color); color: white; border: none; border-radius: 5px;">Intentar de Nuevo</button>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>¿Listo para explorar Ushuaia sin límites?</p>
+            <a href="http://www.ulocker.ar" target="_blank">¡Reservá tu Locker Ahora!</a>
+        </div>
+    </footer>
+
+    <script>
+        const quizData = [
+            {
+                question: "¿Cuál es el principal problema que U LOCKER busca resolver para los viajeros?",
+                options: ["Falta de hoteles", "La incomodidad de pasear con equipaje", "El clima impredecible", "La falta de transporte"],
+                answer: "La incomodidad de pasear con equipaje"
+            },
+            {
+                question: "¿Cómo se accede a un locker reservado?",
+                options: ["Con una llave física", "Con un candado personal", "Con un código de acceso digital", "Pidiendo ayuda al personal"],
+                answer: "Con un código de acceso digital"
+            },
+            {
+                question: "¿Cuál es el horario de funcionamiento de U LOCKER?",
+                options: ["De 9 a 18 hs", "Solo fines de semana", "24 horas, los 365 días del año", "Depende de la temporada"],
+                answer: "24 horas, los 365 días del año"
+            },
+            {
+                question: "¿Qué medida de seguridad NO se menciona en el informe?",
+                options: ["Videovigilancia 24/7", "Guardias de seguridad presenciales", "Cerraduras electrónicas avanzadas", "Acceso exclusivo y personal"],
+                answer: "Guardias de seguridad presenciales"
+            },
+            {
+                question: "¿Cómo se realiza la reserva de un locker?",
+                options: ["Llamando por teléfono", "Enviando un email", "A través del sitio web www.ulocker.ar", "Directamente en el local"],
+                answer: "A través del sitio web www.ulocker.ar"
+            }
+        ];
+
+        const quizContainer = document.getElementById('quiz');
+        const feedbackContainer = document.getElementById('feedback');
+        const resultsContainer = document.getElementById('results-container');
+        const finalScoreSpan = document.getElementById('final-score');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            if (currentQuestionIndex < quizData.length) {
+                const currentQuestion = quizData[currentQuestionIndex];
+                quizContainer.innerHTML = `
+                    <div class="question">
+                        <p>${currentQuestionIndex + 1}. ${currentQuestion.question}</p>
+                        <div class="options">
+                            ${currentQuestion.options.map(option => `<button onclick="selectAnswer(this, '${option}')">${option}</button>`).join('')}
+                        </div>
+                    </div>
+                `;
+                feedbackContainer.textContent = '';
+            } else {
+                showResults();
+            }
+        }
+        
+        function selectAnswer(button, selectedOption) {
+            const currentQuestion = quizData[currentQuestionIndex];
+            const buttons = button.parentElement.querySelectorAll('button');
+            
+            buttons.forEach(btn => btn.disabled = true); // Disable all options
+
+            if (selectedOption === currentQuestion.answer) {
+                button.classList.add('correct');
+                feedbackContainer.textContent = '¡Correcto!';
+                feedbackContainer.style.color = 'var(--correct-color)';
+                score++;
+            } else {
+                button.classList.add('incorrect');
+                feedbackContainer.textContent = `Incorrecto. La respuesta correcta es: ${currentQuestion.answer}`;
+                feedbackContainer.style.color = 'var(--incorrect-color)';
+                 // Highlight the correct answer
+                buttons.forEach(btn => {
+                    if (btn.textContent === currentQuestion.answer) {
+                        btn.classList.add('correct');
+                    }
+                });
+            }
+
+            setTimeout(() => {
+                currentQuestionIndex++;
+                loadQuestion();
+            }, 2000); // Wait 2 seconds before loading the next question
+        }
+
+        function showResults() {
+            quizContainer.style.display = 'none';
+            feedbackContainer.style.display = 'none';
+            resultsContainer.style.display = 'block';
+            finalScoreSpan.textContent = `${score} de ${quizData.length}`;
+        }
+
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            quizContainer.style.display = 'block';
+            feedbackContainer.style.display = 'block';
+            resultsContainer.style.display = 'none';
+            loadQuestion();
+        }
+
+
+        // Initial load
+        window.onload = loadQuestion;
+    </script>
+
+</body>
+</html>

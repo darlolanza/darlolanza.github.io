@@ -320,7 +320,10 @@
                 
                 const optionsContainer = document.createElement('div');
                 
-                quizItem.options.forEach(optionText => {
+                // Aleatorizar el orden de las opciones
+                const shuffledOptions = [...quizItem.options].sort(() => Math.random() - 0.5);
+
+                shuffledOptions.forEach(optionText => {
                     const button = document.createElement('button');
                     button.className = 'quiz-option';
                     button.textContent = optionText;
@@ -364,11 +367,5 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
 
 

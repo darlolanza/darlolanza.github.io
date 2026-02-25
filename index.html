@@ -1,11 +1,466 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dario Lanza - UX & Diseño Gráfico</title>
+<meta name="description" content="Portfolio de Dario Lanza, Diseñador UX & Gráfico.">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class', // Importante para que funcione tu botón de modo oscuro
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['Inter', 'sans-serif'],
+        },
+      }
+    }
+  }
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+  * {
+    font-family: 'Inter', sans-serif !important;
+  }
+</style>
+
+<script type="importmap">
+  {
+    "imports": {
+      "react": "https://esm.sh/react@18.2.0",
+      "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+      "lucide-react": "https://esm.sh/lucide-react@0.263.1"
+    }
+  }
+  </script>
+
+<script src="https://unpkg.com/@babel/standalone@7.23.10/babel.min.js"></script>
 </head>
-<body>
-    <h1>Hello, World!</h1>
+
+<body class="bg-zinc-50 dark:bg-black transition-colors duration-300">
+
+<div id="root"></div>
+
+<script type="text/babel" data-type="module">
+  import React, { useState, useEffect } from 'react';
+  import { createRoot } from 'react-dom/client';
+  import {
+    Briefcase, GraduationCap, Mail, Linkedin, ExternalLink, MapPin,
+    User, Cpu, Heart, Radio, Moon, Sun, Menu, X, Download
+  } from 'lucide-react';
+
+  /* ========================================
+     DATOS
+     ======================================== */
+  const DATA = {
+    profile: {
+      name: "Dario Lanza",
+      role: "Diseñador UX & Gráfico",
+      tagline: "Diseñando soluciones para mejorar la vida de las personas.",
+      bio: "Diseñador gráfico UBA con más de 15 años de experiencia. Especializado en UX, estrategia de comunicación y diseño inclusivo. Actualmente coordinando diseño en el sector público y docente universitario.",
+      location: "Tierra del Fuego, Argentina",
+      emails: ["hola@dariolanza.ar", "dgdariolanza@gmail.com")],
+      links: {
+        linkedin: "https://www.linkedin.com/in/dariolanza1978",
+        behance: "https://www.behance.net/dariolanza1978"
+      },
+      avatar: "img/dario-lanza.jpg"
+    },
+    experience: [
+      {
+        company: "Policía de Tierra del Fuego",
+        role: "Coordinador de Diseño (Oficina Info. Institucional)",
+        period: "Nov 2019 - Presente",
+        desc: "Estrategia de comunicación interna/externa y supervisión visual. Implementación de sitio web con criterios de usabilidad (modelo policía de proximidad) y agilización de trámites digitales."
+      },
+      {
+        company: "CENT Nro. 11 (Ushuaia)",
+        role: "Coordinador de Carrera & Docente",
+        period: "Mar 2018 - Dic 2023",
+        desc: "Coordinación de la carrera Diseño, Imagen y Sonido. Generación de contenido académico y coordinación del cuerpo docente."
+      },
+      {
+        company: "Colegio Provincial Los Andes",
+        role: "Docente",
+        period: "Mar 2015 - May 2016",
+        desc: "Dictado de materias: Diseño Editorial, Expresión gráfica y nuevas tecnologías."
+      },
+      {
+        company: "FADU - UBA",
+        role: "Docente Universitario",
+        period: "2006 - 2010",
+        desc: "Experiencia docente en la Universidad de Buenos Aires."
+      }
+    ],
+    education: [
+      {
+        institution: "UXDI.ORG",
+        degree: "UX Designer & Diseño Inclusivo",
+        year: "2022"
+      },
+      {
+        institution: "Universidad de Buenos Aires (FADU)",
+        degree: "Diseñador Gráfico",
+        year: "2006 - 2010"
+      }
+    ],
+    hardSkills: [
+      "Arquitectura de Información", "Diseño de Interacción", "Prototipado", "Diseño Visual", "Identificación de necesidades", "Informática Avanzada"
+    ],
+    softSkills: [
+      "Pensamiento Crítico", "Liderazgo de Equipos", "Adaptabilidad", "Resolución de Problemas", "Comunicación", "Empatía"
+    ],
+    interests: [
+      "Ambientes Multiculturales", "Viajar", "Radioafición", "Interacción Humana"
+    ]
+  };
+
+  /* ========================================
+     COMPONENTES UI
+     ======================================== */
+
+  const Badge = ({ children, variant = 'primary', className = '' }) => {
+    const styles = {
+      primary: "bg-blue-100 text-blue-900 dark:bg-blue-900/40 dark:text-blue-100 border border-blue-200 dark:border-blue-800",
+      secondary: "bg-purple-100 text-purple-900 dark:bg-purple-900/40 dark:text-purple-100 border border-purple-200 dark:border-purple-800",
+      outline: "border border-zinc-200 text-zinc-600 dark:border-zinc-700 dark:text-zinc-300"
+    };
+
+    return (
+      <span className={`inline-flex items-center justify-center px-4 py-1.5 rounded-full text-sm font-medium leading-none transition-colors ${styles[variant]} ${className}`}>
+        {children}
+      </span>
+    );
+  };
+
+  const Card = ({ children, className = "", onClick }) => (
+    <div
+      onClick={onClick}
+      className={`bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-6 shadow-sm dark:shadow-none transition-all duration-300 ${className}`}
+    >
+      {children}
+    </div>
+  );
+
+  const SectionTitle = ({ icon: Icon, title }) => (
+    <div className="flex items-center gap-3 mb-8">
+      <div className="p-2.5 bg-blue-600 rounded-xl text-white shadow-lg shadow-blue-600/20 flex items-center justify-center">
+        <Icon size={22} />
+      </div>
+      <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 tracking-tight">{title}</h2>
+    </div>
+  );
+
+  /* ========================================
+     APP PRINCIPAL
+     ======================================== */
+
+  function PortfolioApp() {
+    const [darkMode, setDarkMode] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
+    const [menuOpen, setMenuOpen] = useState(false);
+
+    useEffect(() => {
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        setDarkMode(true);
+      }
+      const handleScroll = () => setScrolled(window.scrollY > 20);
+      window.addEventListener('scroll', handleScroll);
+      return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    useEffect(() => {
+      if (darkMode) document.documentElement.classList.add('dark');
+      else document.documentElement.classList.remove('dark');
+    }, [darkMode]);
+
+    const navLinks = [
+      { name: 'Perfil', href: '#profile' },
+      { name: 'Experiencia', href: '#experience' },
+      { name: 'Skills', href: '#skills' },
+      { name: 'Contacto', href: '#contact' },
+    ];
+
+    const scrollTo = (id) => {
+      setMenuOpen(false);
+      const element = document.querySelector(id);
+      if (element) element.scrollIntoView({ behavior: 'smooth' });
+    };
+
+    return (
+      <div className="min-h-screen bg-zinc-50 dark:bg-black text-zinc-900 dark:text-zinc-100 selection:bg-blue-500 selection:text-white transition-colors duration-300 font-sans">
+
+        {/* NAVBAR */}
+        <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/70 dark:bg-black/70 backdrop-blur-xl border-b border-zinc-200 dark:border-zinc-800 py-3 shadow-sm' : 'bg-transparent py-5'}`}>
+          <div className="max-w-5xl mx-auto px-6 flex justify-between items-center">
+            <span className="text-xl font-bold tracking-tighter cursor-pointer" onClick={() => window.scrollTo(0, 0)}>
+              DL<span className="text-blue-600">.</span>
+            </span>
+
+            <div className="hidden md:flex items-center gap-8">
+              {navLinks.map(link => (
+                <button
+                  key={link.name}
+                  onClick={() => scrollTo(link.href)}
+                  className="text-sm font-medium text-zinc-600 dark:text-zinc-300 hover:text-blue-600 dark:hover:text-white transition-colors"
+                >
+                  {link.name}
+                </button>
+              ))}
+              <button
+                onClick={() => setDarkMode(!darkMode)}
+                className="p-2.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
+              >
+                {darkMode ? <Sun size={18} /> : <Moon size={18} />}
+              </button>
+            </div>
+
+            <div className="flex items-center gap-4 md:hidden">
+              <button onClick={() => setDarkMode(!darkMode)} className="p-2 text-zinc-600 dark:text-zinc-300">
+                {darkMode ? <Sun size={20} /> : <Moon size={20} />}
+              </button>
+              <button onClick={() => setMenuOpen(!menuOpen)} className="p-2 text-zinc-900 dark:text-white">
+                {menuOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+            </div>
+          </div>
+        </nav>
+
+        {/* MOBILE MENU */}
+        {menuOpen && (
+          <div className="fixed inset-0 z-40 bg-white dark:bg-black pt-24 px-6 md:hidden">
+              <div className="flex flex-col gap-6">
+                {navLinks.map(link => (
+                  <button
+                    key={link.name}
+                    onClick={() => scrollTo(link.href)}
+                    className="text-2xl font-bold text-left text-zinc-900 dark:text-white py-2 border-b border-zinc-100 dark:border-zinc-800"
+                  >
+                    {link.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <main className="max-w-5xl mx-auto px-6 pt-32 pb-20 space-y-24">
+
+            {/* HERO SECTION */}
+            <section id="profile" className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+              {/* Main Card */}
+              <Card className="col-span-1 md:col-span-2 md:row-span-2 flex flex-col justify-between bg-gradient-to-br from-white to-blue-50/50 dark:from-zinc-900 dark:to-zinc-900">
+                <div>
+                  {/* Header con Badge y Ubicación corregidos */}
+                  <div className="flex flex-wrap items-center gap-y-3 gap-x-4 mb-8">
+                    {/* Badge */}
+                    <span className="inline-flex items-center justify-center bg-blue-100 text-blue-900 dark:bg-blue-600 dark:text-white px-5 py-2 rounded-full text-sm font-semibold leading-tight tracking-wide whitespace-nowrap">
+                      Disponible para proyectos
+                    </span>
+
+                    {/* Ubicación */}
+                    <div className="flex items-center gap-1.5 text-zinc-500 dark:text-zinc-400 text-sm font-medium leading-none pt-0.5">
+                      <MapPin size={16} className="shrink-0" />
+                      <span>{DATA.profile.location}</span>
+                    </div>
+                  </div>
+
+                  <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 leading-[1.1] text-zinc-900 dark:text-white">
+                    Hola, soy <br />
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-500 to-orange-500 dark:from-blue-400 dark:via-indigo-400 dark:to-orange-400">
+                      {DATA.profile.name}
+                    </span>
+                  </h1>
+
+                  <p className="text-lg md:text-xl text-zinc-600 dark:text-zinc-300 max-w-lg leading-relaxed">
+                    {DATA.profile.tagline}
+                  </p>
+                </div>
+
+                <div className="mt-10 flex flex-wrap gap-4">
+                  <a
+                    href={`mailto:${DATA.profile.emails[0]}`}
+                    className="inline-flex items-center gap-2 bg-zinc-900 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-black px-6 py-3.5 rounded-xl font-semibold transition-all active:scale-95"
+                  >
+                    <Mail size={18} /> Contactar
+                  </a>
+                  <a
+                    href={DATA.profile.links.behance}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 bg-white border border-zinc-200 hover:bg-zinc-50 dark:bg-zinc-800 dark:border-zinc-700 dark:hover:bg-zinc-700 text-zinc-900 dark:text-white px-6 py-3.5 rounded-xl font-medium transition-all"
+                  >
+                    <Briefcase size={18} /> Portfolio
+                  </a>
+                  <a
+                    href={DATA.profile.links.linkedin}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 bg-white border border-zinc-200 hover:bg-zinc-50 dark:bg-zinc-800 dark:border-zinc-700 dark:hover:bg-zinc-700 text-zinc-900 dark:text-white px-6 py-3.5 rounded-xl font-medium transition-all"
+                  >
+                    <Linkedin size={18} /> LinkedIn
+                  </a>
+                </div>
+              </Card>
+
+              {/* Avatar Card */}
+              <Card className="col-span-1 flex items-center justify-center bg-indigo-600 dark:bg-indigo-600 !border-none relative overflow-hidden group min-h-[300px] md:min-h-0">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent z-10">
+                  <img
+                    src={DATA.profile.avatar}
+                    alt={DATA.profile.name}
+                    className="absolute inset-0 w-full h-full object-cover object-[center_30%] transition-transform duration-700 group-hover:scale-110 opacity-90 mix-blend-overlay"
+                  />
+                </div>
+              </Card>
+
+              {/* Bio Summary Card */}
+              <Card className="col-span-1 flex flex-col justify-center">
+                <h3 className="font-bold text-lg mb-3 flex items-center gap-2 text-zinc-900 dark:text-white">
+                  <User size={20} className="text-blue-600 dark:text-blue-400" /> Bio Express
+                </h3>
+                <p className="text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                  {DATA.profile.bio}
+                </p>
+              </Card>
+            </section>
+
+            {/* EXPERIENCE SECTION */}
+            <section id="experience">
+              <SectionTitle icon={Briefcase} title="Trayectoria Profesional" />
+
+              <div className="space-y-8">
+                {DATA.experience.map((job, idx) => (
+                  <div key={idx} className="group relative pl-8 md:pl-10 border-l-2 border-zinc-200 dark:border-zinc-800 hover:border-blue-500 dark:hover:border-blue-500 transition-colors pb-10 last:pb-0">
+                    <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-white dark:bg-zinc-900 border-4 border-zinc-300 dark:border-zinc-700 group-hover:border-blue-500 dark:group-hover:border-blue-500 transition-colors" />
+
+                    <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 mb-2">
+                      <h3 className="text-xl font-bold text-zinc-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                        {job.role}
+                      </h3>
+                      <span className="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800 px-3 py-1 rounded-full whitespace-nowrap">
+                        {job.period}
+                      </span>
+                    </div>
+
+                    <div className="text-lg text-blue-700 dark:text-blue-300 font-medium mb-3">
+                      {job.company}
+                    </div>
+
+                    <p className="text-zinc-600 dark:text-zinc-300 max-w-3xl leading-relaxed">
+                      {job.desc}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* SKILLS & EDUCATION GRID */}
+            <section id="skills" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+              {/* Hard Skills */}
+              <Card className="md:col-span-2">
+                <div className="mb-6 flex items-center gap-2 font-bold text-zinc-900 dark:text-white">
+                  <Cpu className="text-blue-500" size={20} /> Hard Skills
+                </div>
+                <div className="flex flex-wrap gap-2.5">
+                  {DATA.hardSkills.map(skill => (
+                    <Badge key={skill} variant="primary">{skill}</Badge>
+                  ))}
+                </div>
+              </Card>
+
+              {/* Soft Skills */}
+              <Card className="md:col-span-2">
+                <div className="mb-6 flex items-center gap-2 font-bold text-zinc-900 dark:text-white">
+                  <Heart className="text-purple-500" size={20} /> Soft Skills
+                </div>
+                <div className="flex flex-wrap gap-2.5">
+                  {DATA.softSkills.map(skill => (
+                    <Badge key={skill} variant="secondary">{skill}</Badge>
+                  ))}
+                </div>
+              </Card>
+
+              {/* Education */}
+              <Card className="lg:col-span-2 lg:row-span-2">
+                <div className="flex items-center gap-2 font-bold text-xl mb-8 text-zinc-900 dark:text-white">
+                  <GraduationCap size={24} className="text-blue-600 dark:text-blue-400" /> Formación
+                </div>
+                <div className="space-y-8">
+                  {DATA.education.map((edu, i) => (
+                    <div key={i} className="relative">
+                      <div className="font-bold text-lg text-zinc-900 dark:text-zinc-50">{edu.degree}</div>
+                      <div className="text-zinc-600 dark:text-zinc-300 font-medium">{edu.institution}</div>
+                      <div className="text-sm text-zinc-400 dark:text-zinc-500 mt-1">{edu.year}</div>
+                      {i !== DATA.education.length - 1 && (
+                        <div className="h-px bg-zinc-100 dark:bg-zinc-800 mt-6" />
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </Card>
+
+             {/* Personal Interest */}
+              <Card className="lg:col-span-2 flex flex-col justify-center items-start bg-amber-50 dark:bg-zinc-900/50 border-amber-200 dark:border-amber-900/30">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2.5 bg-amber-100 dark:bg-amber-500/10 rounded-full text-amber-700 dark:text-amber-400">
+                    <Radio size={24} />
+                  </div>
+                  <h3 className="font-bold text-amber-900 dark:text-amber-100">Dato Curioso</h3>
+                </div>
+                <p className="text-amber-900/90 dark:text-amber-100/90 italic text-lg font-medium leading-relaxed">
+                  "Me apasiona la radioafición, considerada la primera red social del mundo."
+                </p>
+              </Card>
+
+              {/* Stats */}
+              <Card className="lg:col-span-2 flex items-center justify-around py-8">
+                <div className="text-center">
+                  <div className="text-3xl font-black text-zinc-900 dark:text-white mb-1">10+</div>
+                  <div className="text-xs uppercase font-bold text-zinc-400">Años Docencia</div>
+                </div>
+                <div className="h-12 w-px bg-zinc-100 dark:bg-zinc-800" />
+                <div className="text-center">
+                  <div className="text-3xl font-black text-zinc-900 dark:text-white mb-1">15+</div>
+                  <div className="text-xs uppercase font-bold text-zinc-400">Años Diseño</div>
+                </div>
+              </Card>
+            </section>
+
+            {/* CONTACT FOOTER */}
+            <section id="contact" className="py-12 border-t border-zinc-200 dark:border-zinc-800 mt-20 text-center">
+              <h2 className="text-3xl font-bold mb-6 text-zinc-900 dark:text-white">Conectemos</h2>
+              <p className="text-zinc-600 dark:text-zinc-400 mb-10 max-w-lg mx-auto text-lg">
+                Estoy abierto a escuchar nuevas propuestas de proyectos y desafíos.
+              </p>
+
+              <div className="flex flex-col sm:flex-row justify-center gap-4 mb-16">
+                <a href={`mailto:${DATA.profile.emails[0]}`} className="flex items-center justify-center gap-3 px-8 py-4 bg-orange-500 text-white rounded-xl font-bold hover:bg-orange-600 transition-all shadow-xl shadow-orange-500/20 active:scale-95">
+                  <Mail size={20} /> Enviar Correo
+                </a>
+              </div>
+
+              <div className="text-sm text-zinc-400 dark:text-zinc-600">
+                © {new Date().getFullYear()} Dario Lanza. <br className="sm:hidden" />
+                Diseño eficiente y fiel a los principios.
+              </div>
+            </section>
+
+          </main>
+        </div>
+      );
+    }
+
+    // Renderizado de la App
+    const root = createRoot(document.getElementById('root'));
+    root.render(<PortfolioApp />);
+
+  </script>
 </body>
+
 </html>

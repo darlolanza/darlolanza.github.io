@@ -6,6 +6,11 @@
       "sourceType": "github",
       "computedHash": "61fd36ced5c674f38634f6f7c8c5299f8ffb3e637b7a9300463aba6c3a045249"
     },
+    "ui-ux-pro-max": {
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceType": "github",
+      "computedHash": "e688fcd4c5693e14ebd00d48e982dbd2be060fbea89f5f60531e79c704a1bc28"
+    },
     "web-design-guidelines": {
       "source": "vercel-labs/agent-skills",
       "sourceType": "github",

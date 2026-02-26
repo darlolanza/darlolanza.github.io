@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "skills": {
+    "swiftui-liquid-glass": {
+      "source": "dimillian/skills",
+      "sourceType": "github",
+      "computedHash": "61fd36ced5c674f38634f6f7c8c5299f8ffb3e637b7a9300463aba6c3a045249"
+    }
+  }
+}

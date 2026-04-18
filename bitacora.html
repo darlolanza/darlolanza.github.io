@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth" style="color-scheme: light dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#030014" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)">
+  <title>Bitácora — Dario Lanza</title>
+  <meta name="description" content="Bitácora personal de Dario Lanza: notas, reflexiones y proceso de trabajo.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Space Grotesk', 'sans-serif'],
+            display: ['Archivo', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              DEFAULT: '#8b5cf6',
+              hover: '#7c3aed',
+            },
+          },
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.add('dark');
+    }
+  </script>
+  <style>
+    body { -webkit-font-smoothing: antialiased; }
+    .prose p { margin-bottom: 0.75rem; }
+    .prose ul { list-style: disc; padding-left: 1.25rem; margin-bottom: 0.75rem; }
+  </style>
+</head>
+<body class="bg-[#eef2f6] dark:bg-[#030014] text-slate-800 dark:text-zinc-50 font-sans min-h-screen">
+
+  <header class="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-black/40 backdrop-blur-xl border-b border-white/40 dark:border-white/5">
+    <div class="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="/" class="font-display text-xl font-bold tracking-tight hover:text-brand transition-colors">Dario Lanza</a>
+      <a href="/" class="text-sm text-slate-500 dark:text-zinc-400 hover:text-brand transition-colors">← Portfolio</a>
+    </div>
+  </header>
+
+  <main class="max-w-3xl mx-auto px-6 pt-28 pb-24">
+    <div class="mb-12">
+      <h1 class="font-display text-4xl font-bold tracking-tight mb-3">Bitácora</h1>
+      <p class="text-slate-500 dark:text-zinc-400">Notas, reflexiones y proceso de trabajo.</p>
+    </div>
+    
+    <p class="text-slate-500 dark:text-zinc-500 text-center py-16">Todavía no hay entradas publicadas.</p>
+  </main>
+
+  <footer class="text-center text-xs text-zinc-500 dark:text-zinc-600 pb-8">
+    Actualizado: 18/04/2026 11:44
+  </footer>
+
+  <script>
+    function toggleEntry(idx) {
+      var extracto = document.getElementById('extracto-' + idx);
+      var completo = document.getElementById('completo-' + idx);
+      var btn = document.getElementById('btn-' + idx);
+      if (completo.classList.contains('hidden')) {
+        extracto.classList.add('hidden');
+        completo.classList.remove('hidden');
+        btn.textContent = 'Ver menos ↑';
+      } else {
+        extracto.classList.remove('hidden');
+        completo.classList.add('hidden');
+        btn.textContent = 'Ver más ↓';
+      }
+    }
+  </script>
+</body>
+</html>

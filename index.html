@@ -316,6 +316,7 @@
         { name: 'Perfil', href: '#profile' },
         { name: 'Experiencia', href: '#experience' },
         { name: 'Skills', href: '#skills' },
+        { name: 'Bitácora', href: '/bitacora.html', external: true },
       ];
 
       const scrollTo = (id) => {
@@ -352,13 +353,9 @@
 
               <div className="hidden md:flex items-center gap-10">
                 {navLinks.map(link => (
-                  <button
-                    key={link.name}
-                    onClick={() => scrollTo(link.href)}
-                    className="text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors duration-200 cursor-pointer"
-                  >
-                    {link.name}
-                  </button>
+                  link.external
+                    ? <a key={link.name} href={link.href} className="text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors duration-200">{link.name}</a>
+                    : <button key={link.name} onClick={() => scrollTo(link.href)} className="text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors duration-200 cursor-pointer">{link.name}</button>
                 ))}
 
                 <div className="flex items-center gap-4 pl-6 border-l border-zinc-200 dark:border-zinc-800">
@@ -396,13 +393,9 @@
             <div className="fixed inset-0 z-40 bg-surface-light dark:bg-surface-dark pt-24 px-6 md:hidden flex flex-col">
               <div className="flex flex-col gap-4 mt-8">
                 {navLinks.map(link => (
-                  <button
-                    key={link.name}
-                    onClick={() => scrollTo(link.href)}
-                    className="font-display text-4xl font-medium text-left text-zinc-900 dark:text-white py-4 border-b border-zinc-100 dark:border-zinc-800"
-                  >
-                    {link.name}
-                  </button>
+                  link.external
+                    ? <a key={link.name} href={link.href} className="font-display text-4xl font-medium text-left text-zinc-900 dark:text-white py-4 border-b border-zinc-100 dark:border-zinc-800 block">{link.name}</a>
+                    : <button key={link.name} onClick={() => scrollTo(link.href)} className="font-display text-4xl font-medium text-left text-zinc-900 dark:text-white py-4 border-b border-zinc-100 dark:border-zinc-800">{link.name}</button>
                 ))}
                 <button
                   onClick={() => scrollTo('#contact')}
